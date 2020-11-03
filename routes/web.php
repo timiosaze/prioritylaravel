@@ -11,12 +11,12 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/priority', function () {
-    return view('priority.index');
-});
-Route::get('/priority/edit', function () {
-    return view('priority.edit');
-});
+Route::get('/priority', 'PriorityController@index')->name('priority.index');
+Route::post('/priority', 'PriorityController@store')->name('priority.store');
+Route::get('/priority/{id}/edit', 'PriorityController@edit')->name('priority.edit');
+Route::put('/priority/{id}', 'PriorityController@update')->name('priority.update');
+Route::delete('/priority/{id}', 'PriorityController@destroy')->name ('priority.destroy');
