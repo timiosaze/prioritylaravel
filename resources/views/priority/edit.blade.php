@@ -4,6 +4,7 @@
 	
 		<section class="section">
 			<div class="create-form">
+				@include('inc.validation')
 				<h3>Edit Priority</h3>
 				<form action="{{route('priority.update', $priority->id)}}" method="POST">
 					@csrf

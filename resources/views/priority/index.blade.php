@@ -4,6 +4,8 @@
 	
 		<section class="section">
 			<div class="create-form">
+				@include('inc.validation')
+				@include('inc.session')
 				<h3>New Priority</h3>
 				<form action="{{route('priority.store')}}" method="POST">
 					@csrf

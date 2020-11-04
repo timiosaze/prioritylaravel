@@ -55,8 +55,11 @@ class PriorityController extends Controller
         $priority->user_id = Auth::id();
 
         if($priority->save()){
-            return redirect('/priority');
+            return redirect('/priority')->with('success', 'Successfully saved');
+        } else {
+            return redirect('/priority')->with('failure', 'Not saved');
         }
+        
     }
 
     /**
@@ -104,7 +107,9 @@ class PriorityController extends Controller
         $priority->priority_level = request('priority_level');
 
         if($priority->save()){
-            return redirect('/priority');
+            return redirect('/priority')->with('success', 'Successfully updated');
+        } else {
+            return redirect('/priority')->with('failure', 'Not updated');
         }
     }
 
@@ -120,7 +125,9 @@ class PriorityController extends Controller
         $priority = Priority::where('user_id', Auth::id())->findOrFail($id);
 
         if($priority->delete()){
-            return redirect('/priority');
+            return redirect('/priority')->with('success', 'Successfully deleted');
+        } else {
+            return redirect('/priority')->with('failure', 'Not deleted');
         }
     }
 }
