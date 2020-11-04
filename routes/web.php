@@ -13,10 +13,13 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 Route::get('/priority', 'PriorityController@index')->name('priority.index');
 Route::post('/priority', 'PriorityController@store')->name('priority.store');
 Route::get('/priority/{id}/edit', 'PriorityController@edit')->name('priority.edit');
 Route::put('/priority/{id}', 'PriorityController@update')->name('priority.update');
 Route::delete('/priority/{id}', 'PriorityController@destroy')->name ('priority.destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

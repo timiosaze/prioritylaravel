@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Priority;
+use Auth;
 use Illuminate\Http\Request;
 
 class PriorityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class PriorityController extends Controller
     public function index()
     {
         //
-        $priorities = Priority::orderBy('updated_at', 'desc')->get();
+        $priorities = Priority::where('user_id', Auth::id())->orderBy('updated_at', 'desc')->paginate(7);
 
         return view('priority.index', compact("priorities"));
     }
@@ -47,6 +52,7 @@ class PriorityController extends Controller
         $priority = new Priority();
         $priority->body = request('body');
         $priority->priority_level = request('priority_level');
+        $priority->user_id = Auth::id();
 
         if($priority->save()){
             return redirect('/priority');
@@ -73,7 +79,7 @@ class PriorityController extends Controller
     public function edit($id)
     {
         //
-        $priority = Priority::findOrFail($id);
+        $priority = Priority::where('user_id', Auth::id())->findOrFail($id);
 
         return view('priority.edit', compact("priority"));
     }
@@ -93,7 +99,7 @@ class PriorityController extends Controller
             'priority_level' => 'required'
         ]);
 
-        $priority = Priority::findOrFail($id);
+        $priority = Priority::where('user_id', Auth::id())->findOrFail($id);
         $priority->body = request('body');
         $priority->priority_level = request('priority_level');
 
@@ -111,7 +117,7 @@ class PriorityController extends Controller
     public function destroy($id)
     {
         //
-        $priority = Priority::findOrFail($id);
+        $priority = Priority::where('user_id', Auth::id())->findOrFail($id);
 
         if($priority->delete()){
             return redirect('/priority');
